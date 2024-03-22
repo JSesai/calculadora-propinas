@@ -3,13 +3,14 @@ import { menuItems } from "./data/db"
 import MenuItem from "./components/MenuItem"
 import OrderContents from "./components/OrderContents"
 import useOrder from "./hooks/useOrder"
-
+import OrdenTotal from "./components/OrdenTotal"
+import TipPercentageForm from "./components/TipPercentageForm"
 
 
 
 export default function App() {
   // console.log(menuItems);
-  const { addItem, order, removeItem } = useOrder()
+  const { addItem, order, removeItem, tip, setTip, placeOrder } = useOrder()
 
   return (
     <>
@@ -31,8 +32,17 @@ export default function App() {
         </div>
 
         <div className="border border-dashed border-slate-300 p-5 rounded-lg space-y-10 ">
-         
-            <OrderContents order={order} removeItem={removeItem} />          
+          {order.length > 0 ? (
+            <>
+              <OrderContents order={order} removeItem={removeItem} />
+              <TipPercentageForm setTip={setTip} tip={tip} />
+              <OrdenTotal order={order} tip={tip} placeOrder={placeOrder} />
+
+            </>
+
+          ):
+          <p className="text-center">La Orden Esta Vacia</p>
+          }
 
         </div>
 
